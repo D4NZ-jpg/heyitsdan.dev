@@ -1,0 +1,208 @@
+---
+import '../styles/global.css';
+
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dan · heyitsdan.dev</title>
+    <meta
+      name="description"
+      content="Dan, a CS student and founding engineer at Camtom, building AI for customs operations. From Mexico."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dan · heyitsdan.dev" />
+    <meta
+      property="og:description"
+      content="CS student and founding engineer at Camtom, building AI for customs operations. From Mexico."
+    />
+    <meta property="og:url" content="https://heyitsdan.dev/" />
+    <meta property="og:image" content="https://heyitsdan.dev/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Hey, I'm Dan. Founding engineer at Camtom, building AI software for customs operations."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://heyitsdan.dev/og.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.svg" />
+    <meta name="theme-color" content="#fdf7ec" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="bar">
+        <a class="brand" href="/">heyitsdan<span class="dot">.dev</span></a>
+        <span class="time"><span id="ctime">Mexico</span></span>
+      </header>
+
+      <main>
+        <section class="intro rv">
+          <h1>
+            Hey, I'm Dan <span
+              class="wave"
+              role="img"
+              aria-label="waving hand"
+              tabindex="0"
+              title="hi 👋">👋</span
+            >
+          </h1>
+          <p class="lede">
+            I'm a CS student and founding engineer at <strong>Camtom</strong>,
+            where we build AI software for customs operations. I care about
+            practical software: the kind that solves messy real-world problems
+            and still makes sense when you look under the hood.
+          </p>
+          <p>
+            Outside of work, I'm usually somewhere near reverse engineering,
+            Linux, or a mechanical keyboard. I'm from <strong>Mexico</strong> 🇲🇽.
+          </p>
+        </section>
+
+        <section class="block rv">
+          <h2>What I'm working on</h2>
+          <ul class="list">
+            <li>
+              <a href="https://camtomx.com"
+                ><span class="name">Camtom</span><span class="desc"
+                  >founding engineer, lately on document extraction and tariff
+                  classification</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="https://github.com/D4NZ-jpg/dotfiles"
+                ><span class="name">dotfiles</span><span class="desc"
+                  >my Arch + Neovim setup, forever a work in progress (I use
+                  Arch, btw)</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="https://github.com/D4NZ-jpg/Competitive-Programming"
+                ><span class="name">competitive programming</span><span
+                  class="desc">my Codeforces solutions, mostly C++</span
+                ></a
+              >
+            </li>
+          </ul>
+        </section>
+
+        <section class="block rv">
+          <h2>Writing</h2>
+          <p class="soon">
+            Nothing here yet. I'll be writing about the things I build and learn.
+          </p>
+        </section>
+      </main>
+
+      <footer class="rv">
+        <p>
+          © <span id="yr">{year}</span> Dan · made in Mexico 🇲🇽 · <a
+            href="https://github.com/D4NZ-jpg">GitHub</a
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        var ct = document.getElementById('ctime');
+        function tick() {
+          try {
+            var now = new Date();
+            var t = new Intl.DateTimeFormat('en-US', {
+              timeZone: 'America/Mexico_City',
+              hour: 'numeric',
+              minute: '2-digit',
+              hour12: true,
+            }).format(now);
+            var h =
+              parseInt(
+                new Intl.DateTimeFormat('en-US', {
+                  timeZone: 'America/Mexico_City',
+                  hour: 'numeric',
+                  hour12: false,
+                }).format(now),
+                10
+              ) % 24;
+            if (ct)
+              ct.textContent =
+                'Mexico · ' + t + ' ' + (h >= 7 && h < 19 ? '☀️' : '🌙');
+          } catch (e) {
+            if (ct) ct.textContent = 'Mexico';
+          }
+        }
+        tick();
+        setInterval(tick, 10000);
+
+        var yr = document.getElementById('yr');
+        if (yr) {
+          yr.textContent = String(new Date().getFullYear());
+        }
+
+        var rvs = [].slice.call(document.querySelectorAll('.rv'));
+        var reduce = window.matchMedia(
+          '(prefers-reduced-motion: reduce)'
+        ).matches;
+        if (!('IntersectionObserver' in window) || reduce) {
+          rvs.forEach(function (el) {
+            el.classList.add('in');
+          });
+        } else {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en) {
+                if (en.isIntersecting) {
+                  en.target.classList.add('in');
+                  io.unobserve(en.target);
+                }
+              });
+            },
+            { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }
+          );
+          rvs.forEach(function (el) {
+            io.observe(el);
+          });
+        }
+
+        var wave = document.querySelector('.wave');
+        if (wave) {
+          var waving = false;
+          var playWave = function () {
+            if (reduce || waving) return;
+            waving = true;
+            var anim = wave.animate(
+              [
+                { transform: 'rotate(0deg)' },
+                { transform: 'rotate(18deg)' },
+                { transform: 'rotate(-12deg)' },
+                { transform: 'rotate(16deg)' },
+                { transform: 'rotate(-8deg)' },
+                { transform: 'rotate(12deg)' },
+                { transform: 'rotate(-4deg)' },
+                { transform: 'rotate(0deg)' },
+              ],
+              { duration: 1000, easing: 'ease-in-out' }
+            );
+            anim.onfinish = anim.oncancel = function () {
+              waving = false;
+            };
+          };
+          wave.addEventListener('click', playWave);
+          wave.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              playWave();
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
